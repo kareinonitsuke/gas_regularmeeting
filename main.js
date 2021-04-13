@@ -19,8 +19,8 @@ function set_val(){
 function send_email(subject, text) {
   const recipient = PropertiesService.getScriptProperties().getProperty("RECIPIENT");
   const options = {name: 'スケジュール調整システム'};
-  const atesaki = PropertiesService.getScriptProperties().getProperty("RECIPIENTNAME");
-  const body = `${atesaki}\n\n${text}`;
+  const recipientname = PropertiesService.getScriptProperties().getProperty("RECIPIENTNAME");
+  const body = `${recipientname}\n\n${text}`;
 
   GmailApp.sendEmail(recipient, subject, body, options);
 }
@@ -78,5 +78,4 @@ function announce_result(){
 
 function doGet(){
  return HtmlService.createTemplateFromFile("survey").evaluate();
-
 }
