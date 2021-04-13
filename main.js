@@ -27,21 +27,21 @@ function send_email(subject, text) {
 
 //offset日後の日時を取得する関数
 function get_date(offset){
-  let date = new Date();
+  const date = new Date();//const?
   date.setDate(date.getDate() + offset);
   return date;
 }
 
 //offset日後の成形された日時を取得する関数
 function get_datestr(offset){
-  let date = get_date(offset);
-  let datestr = Utilities.formatDate(date, "JST", "MM/dd");
+  const date = get_date(offset);
+  const datestr = Utilities.formatDate(date, "JST", "MM/dd");
   return datestr;
 }
 
 //funcnameをoffset日後実行するようTriggerを設定する関数
 function set_trigger(funcname, offset){
-  let date = get_date(offset);
+  const date = get_date(offset);
   ScriptApp.newTrigger(funcname).timeBased().at(date).create();
 }
 
@@ -76,6 +76,6 @@ function announce_result(){
   send_email(subject, text);
 }
 
-function doGet(){
- return HtmlService.createTemplateFromFile("survey").evaluate();
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('survey');
 }
