@@ -42,7 +42,7 @@ function updateSchedule(){
   sheet.getRange(offsetLine, offsetColumn+3).setValue("〇");
   sheet.getRange(offsetLine, offsetColumn+4).setValue("△");
   sheet.getRange(offsetLine, offsetColumn+5).setValue("×");
-  for(var i=0; i<=9; i++){
+  for(var i=0; i<=19; i++){
     sheet.getRange(offsetLine, i+offsetColumn+6).setValue("名前(未記入)_"+(i+1));
   }
 

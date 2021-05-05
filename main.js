@@ -43,6 +43,9 @@ function set_trigger(funcname, offset){
 
 //集計開始の時に呼ぶ関数
 function request_answer(){
+  //集計用スプレッドシートを初期化
+  updateSchedule();
+
   //集計日数の幅を指定
   const simekiri_offset = 6;
   
