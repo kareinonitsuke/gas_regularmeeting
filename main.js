@@ -56,7 +56,7 @@ function request_answer(){
   //メール本文
   const subject = PropertiesService.getScriptProperties().getProperty("REQUESTANSWERSUBJECT");
   let text = PropertiesService.getScriptProperties().getProperty("REQUESTANSWERTEXT");
-  text += `回答期間は${today}～${simekiri}です。\n`;
+  text += `回答期限は${simekiri}です。\n`;
   //text += '[url]\n'
 
   //件名と本文を指定してメール送信
