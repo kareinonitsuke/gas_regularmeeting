@@ -10,11 +10,6 @@ const maxColumn = 26;
 // アップデート範囲の行数です。
 const maxLine = 8;
 
-// 毎月25日になると、トリガーによってmyFunction()が呼ばれます。
-function myFunction() {
-  updateSchedule();
-}
-
 // 過去のデータ(日付、メンバーの予定)を削除し、日付を更新します。
 function updateSchedule(){
 
