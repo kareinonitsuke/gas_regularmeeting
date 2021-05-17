@@ -71,7 +71,7 @@ function request_answer(){
 //集計締め切りの時に呼ぶ関数
 function announce_result(){
   const subject = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTSUBJECT");
-  const text = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTTEXT");
+  let text = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTTEXT");
   const date = getResultSchedule();
 
   let kouhobi = new Date();
@@ -79,10 +79,13 @@ function announce_result(){
   kouhobi.setDate(date+1);
   let datestr = Utilities.formatDate(kouhobi, "JST", "MM/dd");
 
-  text += `今月の定例会は${datestr}です。\n`;
+  let arrDay = new Array('日', '月', '火', '水', '木', '金', '土');
+  let youbi = arrDay[kouhobi.getDay()];
+
+  text += `今月の定例会は${datestr}(${youbi})です。\n`;
 
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
-  post_discord(text);
+  //ost_discord(text);
 }
