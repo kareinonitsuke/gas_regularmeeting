@@ -39,8 +39,8 @@ function updateSchedule(){
   sheet.getRange(offsetLine, offsetColumn+0).setValue("日付");
   sheet.getRange(offsetLine, offsetColumn+1).setValue("曜日");
   sheet.getRange(offsetLine, offsetColumn+2).setValue("開始時間");
-  sheet.getRange(offsetLine, offsetColumn+3).setValue("〇");
-  sheet.getRange(offsetLine, offsetColumn+4).setValue("△");
+  sheet.getRange(offsetLine, offsetColumn+3).setValue("LT");
+  sheet.getRange(offsetLine, offsetColumn+4).setValue("〇");
   sheet.getRange(offsetLine, offsetColumn+5).setValue("×");
   for(var i=0; i<=19; i++){
     sheet.getRange(offsetLine, i+offsetColumn+6).setValue("名前(未記入)_"+(i+1));
@@ -53,11 +53,15 @@ function updateSchedule(){
     sheet.getRange(i+ol, 2).setValue(Utilities.formatDate(kouhobi,"JST","yyyy/MM/dd"));
     sheet.getRange(i+ol, 3).setValue(arrDay[kouhobi.getDay()]);
     sheet.getRange(i+ol, 4).setValue("19:00");
-    sheet.getRange(i+ol, 5).setValue("=COUNTIF($H"+(i+ol)+":$Q"+(i+ol)+",\"〇\")"); 
-    sheet.getRange(i+ol, 6).setValue("=COUNTIF($H"+(i+ol)+":$Q"+(i+ol)+",\"△\")"); 
+    sheet.getRange(i+ol, 5).setValue("=COUNTIF($H"+(i+ol)+":$Q"+(i+ol)+",\"LT\")"); 
+    sheet.getRange(i+ol, 6).setValue("=COUNTIF($H"+(i+ol)+":$Q"+(i+ol)+",\"〇\")"); 
     sheet.getRange(i+ol, 7).setValue("=COUNTIF($H"+(i+ol)+":$Q"+(i+ol)+",\"×\")");
 
     kouhobi.setDate(kouhobi.getDate() + 1);
   }
+
+}
+
+function getResultSchedule(){
 
 }
