@@ -72,7 +72,14 @@ function request_answer(){
 function announce_result(){
   const subject = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTSUBJECT");
   const text = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTTEXT");
-  //text += `今月の定例会は〇月〇日です。\n`;
+  const date = getResultSchedule();
+
+  let kouhobi = new Date();
+  kouhobi.setMonth(kouhobi.getMonth() + 1);
+  kouhobi.setDate(date+1);
+  let datestr = Utilities.formatDate(kouhobi, "JST", "MM/dd");
+
+  text += `今月の定例会は${datestr}です。\n`;
 
   //件名と本文を指定してメール送信
   send_email(subject, text);

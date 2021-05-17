@@ -63,5 +63,32 @@ function updateSchedule(){
 }
 
 function getResultSchedule(){
+  // ===============================================
+  //  対象スプレッドシートのスプレッドシート情報を取得します。
+  // ===============================================
+  //  参考：https://qiita.com/chihiro/items/3e1d17b78676c6a39d24
+  var spreadsheet = SpreadsheetApp.openById('10SB0Vf4404BwiYzSNJm5YKrt-cBwSWz9SBvcW2Ox7cE');
+  var sheet = spreadsheet.getSheetByName('Scheduler');
 
+  var ol = offsetLine + 1;
+  let max_maru = 0;
+  let max_lt = 0;
+  let dateFlg = 0; 
+
+  result = sheet.getRange("E6:G12").getValues();
+  Logger.log(result);
+  for (var i=0; i<=6; i++) {
+    if((max_maru+max_lt)<(result[i][0]+result[i][1])){
+      max_lt = result[i][0];
+      max_maru = result[i][1];
+      dateFlg = i;
+    }
+    else if(((max_lt+max_maru)==(result[i][0]+result[i][1]))&&(max_lt<=result[i][0])){
+      max_lt = result[i][0];
+      max_maru = result[i][1];
+      dateFlg = i;
+    }
+  }
+  Logger.log(dateFlg);
+  return dateFlg;
 }
