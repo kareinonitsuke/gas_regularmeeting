@@ -60,12 +60,13 @@ function request_answer(){
   const subject = PropertiesService.getScriptProperties().getProperty("REQUESTANSWERSUBJECT");
   let text = PropertiesService.getScriptProperties().getProperty("REQUESTANSWERTEXT");
   text += `回答期限は${simekiri}です。\n`;
-  //text += '[url]\n'
+  text += PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL");
+  text += "\n"
 
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
-  post_discord(text);
+  //post_discord(text);
 }
 
 //集計締め切りの時に呼ぶ関数
@@ -83,6 +84,8 @@ function announce_result(){
   let youbi = arrDay[kouhobi.getDay()];
 
   text += `今月の定例会は${datestr}(${youbi})です。\n`;
+  text += PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL");
+  text += "\n"
 
   //件名と本文を指定してメール送信
   send_email(subject, text);

@@ -17,7 +17,7 @@ function updateSchedule(){
   //  対象スプレッドシートのスプレッドシート情報を取得します。
   // ===============================================
   //  参考：https://qiita.com/chihiro/items/3e1d17b78676c6a39d24
-  var spreadsheet = SpreadsheetApp.openById('10SB0Vf4404BwiYzSNJm5YKrt-cBwSWz9SBvcW2Ox7cE');
+  var spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
   var sheet = spreadsheet.getSheetByName('Scheduler');
 
   // ===============================================
@@ -53,9 +53,9 @@ function updateSchedule(){
     sheet.getRange(i+ol, 2).setValue(Utilities.formatDate(kouhobi,"JST","yyyy/MM/dd"));
     sheet.getRange(i+ol, 3).setValue(arrDay[kouhobi.getDay()]);
     sheet.getRange(i+ol, 4).setValue("19:00");
-    sheet.getRange(i+ol, 5).setValue("=COUNTIF($H"+(i+ol)+":$Q"+(i+ol)+",\"LT\")"); 
-    sheet.getRange(i+ol, 6).setValue("=COUNTIF($H"+(i+ol)+":$Q"+(i+ol)+",\"〇\")"); 
-    sheet.getRange(i+ol, 7).setValue("=COUNTIF($H"+(i+ol)+":$Q"+(i+ol)+",\"×\")");
+    sheet.getRange(i+ol, 5).setValue("=COUNTIF($H"+(i+ol)+":$AA"+(i+ol)+",\"LT\")"); 
+    sheet.getRange(i+ol, 6).setValue("=COUNTIF($H"+(i+ol)+":$AA"+(i+ol)+",\"〇\")"); 
+    sheet.getRange(i+ol, 7).setValue("=COUNTIF($H"+(i+ol)+":$AA"+(i+ol)+",\"×\")");
 
     kouhobi.setDate(kouhobi.getDate() + 1);
   }
@@ -67,7 +67,7 @@ function getResultSchedule(){
   //  対象スプレッドシートのスプレッドシート情報を取得します。
   // ===============================================
   //  参考：https://qiita.com/chihiro/items/3e1d17b78676c6a39d24
-  var spreadsheet = SpreadsheetApp.openById('10SB0Vf4404BwiYzSNJm5YKrt-cBwSWz9SBvcW2Ox7cE');
+  var spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
   var sheet = spreadsheet.getSheetByName('Scheduler');
 
   var ol = offsetLine + 1;
