@@ -43,6 +43,9 @@ function set_trigger(funcname, offset){
 
 //集計開始の時に呼ぶ関数
 function request_answer(){
+  //集計用スプレッドシートを初期化
+  updateSchedule();
+
   //集計日数の幅を指定
   const simekiri_offset = 6;
   
@@ -56,23 +59,36 @@ function request_answer(){
   //メール本文
   const subject = PropertiesService.getScriptProperties().getProperty("REQUESTANSWERSUBJECT");
   let text = PropertiesService.getScriptProperties().getProperty("REQUESTANSWERTEXT");
-  text += `回答期間は${today}～${simekiri}です。\n`;
-  //text += '[url]\n'
+  text += `回答期限は${simekiri}です。\n`;
+  text += PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL");
+  text += "\n"
 
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
-  post_discord(text);
+  //post_discord(text);
 }
 
 //集計締め切りの時に呼ぶ関数
 function announce_result(){
   const subject = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTSUBJECT");
-  const text = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTTEXT");
-  //text += `今月の定例会は〇月〇日です。\n`;
+  let text = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTTEXT");
+  const date = getResultSchedule();
+
+  let kouhobi = new Date();
+  kouhobi.setMonth(kouhobi.getMonth() + 1);
+  kouhobi.setDate(date+1);
+  let datestr = Utilities.formatDate(kouhobi, "JST", "MM/dd");
+
+  let arrDay = new Array('日', '月', '火', '水', '木', '金', '土');
+  let youbi = arrDay[kouhobi.getDay()];
+
+  text += `今月の定例会は${datestr}(${youbi})です。\n`;
+  text += PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL");
+  text += "\n"
 
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
-  post_discord(text);
+  //ost_discord(text);
 }
