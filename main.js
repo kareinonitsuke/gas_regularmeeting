@@ -9,6 +9,8 @@ function set_val(){
   PropertiesService.getScriptProperties().setProperty("DISCORDURL", "");
   PropertiesService.getScriptProperties().setProperty("DISCORDTOKEN", "");
   PropertiesService.getScriptProperties().setProperty("DISCORDCHANNEL", "");
+  PropertiesService.getScriptProperties().setProperty("SURVEYFORMID", "");
+  PropertiesService.getScriptProperties().setProperty("SURVEYFORMURL","");
   //スクリプトプロパティを取得する
   Logger.log(PropertiesService.getScriptProperties().getProperty("RECIPIENT"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("RECIPIENTNAME"));
@@ -19,6 +21,8 @@ function set_val(){
   Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDURL"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDTOKEN"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDCHANNNEL"));
+  Logger.log(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
+  Logger.log(PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL"));
 }
 
 //offset日後の日時を取得する関数                                                

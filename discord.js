@@ -3,7 +3,7 @@ function post_discord(message){
     const token      = PropertiesService.getScriptProperties().getProperty("DISCORDTOKEN");
     const channel    = PropertiesService.getScriptProperties().getProperty("DISCORDCHANNEL");
     const text       = message;
-    const username   = 'スケジュール調整システム(試運転)';
+    const username   = '日程調整システム(試運転)';
     const parse      = 'full';
     const method     = 'post';
 
