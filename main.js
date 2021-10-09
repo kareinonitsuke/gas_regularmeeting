@@ -11,6 +11,7 @@ function set_val(){
   PropertiesService.getScriptProperties().setProperty("DISCORDCHANNEL", "");
   PropertiesService.getScriptProperties().setProperty("SURVEYFORMID", "");
   PropertiesService.getScriptProperties().setProperty("SURVEYFORMURL","");
+  PropertiesService.getScriptProperties().setProperty("DISCORDMENTION","");
   //スクリプトプロパティを取得する
   Logger.log(PropertiesService.getScriptProperties().getProperty("RECIPIENT"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("RECIPIENTNAME"));
@@ -23,6 +24,17 @@ function set_val(){
   Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDCHANNNEL"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL"));
+  Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDMENTION"));
+}
+
+//集計開始日の設定
+function set_survaydate(){
+  //あとできれいにする
+  const offset = -10;
+  const date = new Date();
+  date.setMonth(date.getMonth() + 1);
+  date.setDate(offset);
+  ScriptApp.newTrigger("request_answer").timeBased().at(date).create();
 }
 
 //offset日後の日時を取得する関数                                                
