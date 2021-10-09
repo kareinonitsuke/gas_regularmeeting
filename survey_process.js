@@ -17,8 +17,8 @@ function updateSchedule(){
   //  対象スプレッドシートのスプレッドシート情報を取得します。
   // ===============================================
   //  参考：https://qiita.com/chihiro/items/3e1d17b78676c6a39d24
-  var spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
-  var sheet = spreadsheet.getSheetByName('Scheduler');
+  const spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
+  const sheet = spreadsheet.getSheetByName('Scheduler');
 
   // ===============================================
   //  先月の内容を一旦クリアします。
@@ -31,7 +31,7 @@ function updateSchedule(){
   // ===============================================
   //  日付情報を入手します。
   //  参考：http://www.googleappsscript.info/2017-07-27/get_now.html
-  var kouhobi = new Date();
+  let kouhobi = new Date();
   kouhobi.setMonth(kouhobi.getMonth() + 1);
   kouhobi.setDate(1);
 
@@ -42,13 +42,13 @@ function updateSchedule(){
   sheet.getRange(offsetLine, offsetColumn+3).setValue("LT");
   sheet.getRange(offsetLine, offsetColumn+4).setValue("〇");
   sheet.getRange(offsetLine, offsetColumn+5).setValue("×");
-  for(var i=0; i<=19; i++){
+  for(let i=0; i<=19; i++){
     sheet.getRange(offsetLine, i+offsetColumn+6).setValue("名前(未記入)_"+(i+1));
   }
 
   //  日付と集計結果を初期化します。
-  var arrDay = new Array('日', '月', '火', '水', '木', '金', '土');
-  var ol = offsetLine + 1;
+  const arrDay = new Array('日', '月', '火', '水', '木', '金', '土');
+  const ol = offsetLine + 1;
   for (var i=0; i<=6; i++) {
     sheet.getRange(i+ol, 2).setValue(Utilities.formatDate(kouhobi,"JST","yyyy/MM/dd"));
     sheet.getRange(i+ol, 3).setValue(arrDay[kouhobi.getDay()]);
@@ -67,17 +67,17 @@ function getResultSchedule(){
   //  対象スプレッドシートのスプレッドシート情報を取得します。
   // ===============================================
   //  参考：https://qiita.com/chihiro/items/3e1d17b78676c6a39d24
-  var spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
-  var sheet = spreadsheet.getSheetByName('Scheduler');
+  const spreadsheet = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
+  const sheet = spreadsheet.getSheetByName('Scheduler');
 
-  var ol = offsetLine + 1;
+  const ol = offsetLine + 1;
   let max_maru = 0;
   let max_lt = 0;
   let dateFlg = 0; 
 
   result = sheet.getRange("E6:G12").getValues();
   Logger.log(result);
-  for (var i=0; i<=6; i++) {
+  for (let i=0; i<=6; i++) {
     if((max_maru+max_lt)<(result[i][0]+result[i][1])){
       max_lt = result[i][0];
       max_maru = result[i][1];

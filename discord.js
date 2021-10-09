@@ -2,8 +2,8 @@ function post_discord(message){
     const url        = PropertiesService.getScriptProperties().getProperty("DISCORDURL");
     const token      = PropertiesService.getScriptProperties().getProperty("DISCORDTOKEN");
     const channel    = PropertiesService.getScriptProperties().getProperty("DISCORDCHANNEL");
-    const text       = message;
-    const username   = 'スケジュール調整システム(試運転)';
+    const text       = PropertiesService.getScriptProperties().getProperty("DISCORDMENTION")+message;
+    const username   = '日程調整システム(試運転)';
     const parse      = 'full';
     const method     = 'post';
 
@@ -25,5 +25,5 @@ function post_discord(message){
 }
 
 function discord_test(){
-    post_discord("投稿テストです");
+    post_discord(PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL")+" 投稿テストです");
 }

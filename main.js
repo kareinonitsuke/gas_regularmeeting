@@ -9,6 +9,9 @@ function set_val(){
   PropertiesService.getScriptProperties().setProperty("DISCORDURL", "");
   PropertiesService.getScriptProperties().setProperty("DISCORDTOKEN", "");
   PropertiesService.getScriptProperties().setProperty("DISCORDCHANNEL", "");
+  PropertiesService.getScriptProperties().setProperty("SURVEYFORMID", "");
+  PropertiesService.getScriptProperties().setProperty("SURVEYFORMURL","");
+  PropertiesService.getScriptProperties().setProperty("DISCORDMENTION","");
   //スクリプトプロパティを取得する
   Logger.log(PropertiesService.getScriptProperties().getProperty("RECIPIENT"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("RECIPIENTNAME"));
@@ -19,6 +22,19 @@ function set_val(){
   Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDURL"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDTOKEN"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDCHANNNEL"));
+  Logger.log(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
+  Logger.log(PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL"));
+  Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDMENTION"));
+}
+
+//集計開始日の設定
+function set_survaydate(){
+  //あとできれいにする
+  const offset = -10;
+  const date = new Date();
+  date.setMonth(date.getMonth() + 1);
+  date.setDate(offset);
+  ScriptApp.newTrigger("request_answer").timeBased().at(date).create();
 }
 
 //offset日後の日時を取得する関数                                                
@@ -66,7 +82,7 @@ function request_answer(){
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
-  //post_discord(text);
+  post_discord(text);
 }
 
 //集計締め切りの時に呼ぶ関数
@@ -90,5 +106,5 @@ function announce_result(){
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
-  //ost_discord(text);
+  post_discord(text);
 }
