@@ -70,7 +70,7 @@ function request_answer(){
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
-  //post_discord(text);
+  post_discord(text);
 }
 
 //集計締め切りの時に呼ぶ関数
@@ -94,5 +94,5 @@ function announce_result(){
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
-  //ost_discord(text);
+  post_discord(text);
 }
