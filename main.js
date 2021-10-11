@@ -12,6 +12,7 @@ function set_val(){
   PropertiesService.getScriptProperties().setProperty("SURVEYFORMID", "");
   PropertiesService.getScriptProperties().setProperty("SURVEYFORMURL","");
   PropertiesService.getScriptProperties().setProperty("DISCORDMENTION","");
+  PropertiesService.getScriptProperties().setProperty("ANNOUNCETXT","")
   //スクリプトプロパティを取得する
   Logger.log(PropertiesService.getScriptProperties().getProperty("RECIPIENT"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("RECIPIENTNAME"));
@@ -25,6 +26,7 @@ function set_val(){
   Logger.log(PropertiesService.getScriptProperties().getProperty("SURVEYFORMID"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL"));
   Logger.log(PropertiesService.getScriptProperties().getProperty("DISCORDMENTION"));
+  Logger.log(PropertiesService.getScriptProperties().getProperty("ANNOUNCETXT"));
 }
 
 //集計開始日の設定
@@ -102,7 +104,38 @@ function announce_result(){
   text += `今月の定例会は${datestr}(${youbi})です。\n`;
   text += PropertiesService.getScriptProperties().getProperty("SURVEYFORMURL");
   text += "\n"
+  
+  //件名と本文を指定してメール送信
+  send_email(subject, text);
+  //本文を指定してDiscoedに投稿
+  post_discord(text);
 
+  PropertiesService.getScriptProperties().setProperty("ANNOUNCETXT",`今月の定例会は${datestr}(${youbi})です。\n`)
+  ScriptApp.newTrigger("announce_reminder_bf2").timeBased().at(kouhobi).create();
+
+  let kouhobi_3before = new Date();
+  kouhobi_3before.setMonth(kouhobi.getMonth());
+  kouhobi_3before.setDate(kouhobi.getDay()+3);
+  ScriptApp.newTrigger("announce_reminder_bf0").timeBased().at(kouhobi_3before).create();
+
+  //件名と本文を指定してメール送信
+  send_email(subject, text);
+  //本文を指定してDiscoedに投稿
+  post_discord(text);
+}
+
+function announce_reminder_bf2(){
+  const subject = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTSUBJECT");
+  const text = PropertiesService.getScriptProperties().getProperty("ANNOUNCETXT");
+  //件名と本文を指定してメール送信
+  send_email(subject, text);
+  //本文を指定してDiscoedに投稿
+  post_discord(text);
+}
+
+function announce_reminder_bf0(){
+  const subject = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTSUBJECT");
+  const text = PropertiesService.getScriptProperties().getProperty("ANNOUNCETXT");
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
