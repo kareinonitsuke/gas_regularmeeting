@@ -33,12 +33,8 @@ function set_val(){
 
 //集計開始日の設定
 function set_survaydate(){
-  //あとできれいにする
   const offset = -10;
-  const date = new Date();
-  date.setMonth(date.getMonth() + 1);
-  date.setDate(offset);
-  ScriptApp.newTrigger("request_answer").timeBased().at(date).create();
+  set_trigger("request_answer", offset, 0, 1, 1);
 }
 
 //offset日後の日時を取得する関数                                                
@@ -108,9 +104,6 @@ function announce_result(){
   const date = getResultSchedule();
 
   let kouhobi = get_date(date+1, 0, 1, 1);
-  // kouhobi.setMonth(kouhobi.getMonth() + 1);
-  // kouhobi.setDate(date+1);
-  // let datestr = Utilities.formatDate(kouhobi, "JST", "MM/dd");
   let datestr =get_datestr(kouhobi.getDate(), 0, kouhobi.getMonth(), 0);
 
   let arrDay = new Array('日', '月', '火', '水', '木', '金', '土');
@@ -126,14 +119,8 @@ function announce_result(){
   post_discord(text);
 
   PropertiesService.getScriptProperties().setProperty("REMINDERANNOUNCETXT",`${datestr}(${youbi})です。\n`)
-  // ScriptApp.newTrigger("announce_reminder_bf0").timeBased().at(kouhobi).create();
   set_trigger("announce_reminder_bf0", kouhobi.getDate(), 0, kouhobi.getMonth(), 0);
-
-  // let kouhobi_3before = new Date();
-  // kouhobi_3before.setMonth(kouhobi.getMonth());
-  // kouhobi_3before.setDate(kouhobi.getDay()+3);
   set_trigger("announce_reminder_bf3", kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0);
-  //ScriptApp.newTrigger("announce_reminder_bf3").timeBased().at(kouhobi_3before).create();
 
   //件名と本文を指定してメール送信
   send_email(subject, text);
