@@ -130,7 +130,7 @@ function announce_result(){
 
 function announce_reminder_bf3(){
   const subject = PropertiesService.getScriptProperties().getProperty("REMINDERSUBJECT");
-  const text = "今月の定例会は3日後の"+PropertiesService.getScriptProperties().getProperty("REMINDERANNOUNCETXT");
+  const text = "定例会は3日後の"+PropertiesService.getScriptProperties().getProperty("REMINDERANNOUNCETXT");
   //件名と本文を指定してメール送信
   send_email(subject, text);
   //本文を指定してDiscoedに投稿
