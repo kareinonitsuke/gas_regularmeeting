@@ -17,7 +17,7 @@ clasp clone XXXXXXXXXXXXXXXXXXXXXXXXXXX
 git bashとかで以下を実行
 ```
 git init
-git remote add origin https://github.com/kareinonitsuke/gas_regulermeeting.git
+git remote add origin XXXXXXXXXX
 git pull
-git checkout -b develop_surveyform
+git checkout -b XXXXX
 ```
