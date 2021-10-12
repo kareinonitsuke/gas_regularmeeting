@@ -120,7 +120,10 @@ function announce_result(){
 
   PropertiesService.getScriptProperties().setProperty("REMINDERANNOUNCETXT",`${datestr}(${youbi})です。\n`)
   set_trigger("announce_reminder_bf0", kouhobi.getDate(), 0, kouhobi.getMonth(), 0);
-  set_trigger("announce_reminder_bf3", kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0);
+
+  if(get_date(kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0).getTime() > get_date(0, 1, 0, 1).getTime()){
+    set_trigger("announce_reminder_bf3", kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0);
+  }
 
   //件名と本文を指定してメール送信
   send_email(subject, text);
