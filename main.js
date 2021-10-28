@@ -124,11 +124,6 @@ function announce_result(){
   if(get_date(kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0).getTime() > get_date(0, 1, 0, 1).getTime()){
     set_trigger("announce_reminder_bf3", kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0);
   }
-
-  //件名と本文を指定してメール送信
-  send_email(subject, text);
-  //本文を指定してDiscoedに投稿
-  post_discord(text);
 }
 
 function announce_reminder_bf3(){
