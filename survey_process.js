@@ -9,6 +9,8 @@ const offsetLine = 5;
 const maxColumn = 26;
 // アップデート範囲の行数です。
 const maxLine = 8;
+//定例会設定日のOFFSETを設定します。
+const start_offset=new Array(10,0,0,0,0,0,0,0,0,0,0,0);
 
 // 過去のデータ(日付、メンバーの予定)を削除し、日付を更新します。
 function updateSchedule(){
@@ -33,8 +35,9 @@ function updateSchedule(){
   //  参考：http://www.googleappsscript.info/2017-07-27/get_now.html
   let kouhobi = new Date();
   kouhobi.setMonth(kouhobi.getMonth() + 1);
-  kouhobi.setDate(1);
-
+  //offsetを設定します。
+  kouhobi.setDate(1+start_offset[kouhobi.getMonth()]);
+  
   //  項目名を書き直します。
   sheet.getRange(offsetLine, offsetColumn+0).setValue("日付");
   sheet.getRange(offsetLine, offsetColumn+1).setValue("曜日");
@@ -89,6 +92,10 @@ function getResultSchedule(){
       dateFlg = i;
     }
   }
-  Logger.log(dateFlg);
-  return dateFlg;
+  //何月の定例会の集計か？
+  let kouhobi = new Date();
+  kouhobi.setMonth(kouhobi.getMonth() + 1);
+
+  Logger.log(dateFlg+start_offset[kouhobi.getMonth()]);
+  return dateFlg+start_offset[kouhobi.getMonth()];
 }

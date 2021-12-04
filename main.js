@@ -34,12 +34,19 @@ function set_val(){
 //集計開始日の設定
 function set_survaydate(){
   const offset = -10;
-  set_trigger("request_answer", offset, 0, 1, 1);
+  set_trigger("request_answer", get_date(0, 1, offset, 0, 1, 1));
 }
 
 //offset日後の日時を取得する関数                                                
-function get_date(offset_date, based_on_today_date, offset_month, based_on_today_month){
+function get_date(offset_year, based_on_today_year,offset_date, based_on_today_date, offset_month, based_on_today_month){
   const date = new Date();//const?
+  if(based_on_today_year==1){
+    date.setFullYear(date.getFullYear() + offset_year);
+  }
+  else{
+    date.setFullYear(offset_year);
+  }
+
   if(based_on_today_month==1){
     date.setMonth(date.getMonth() + offset_month);
   }
@@ -57,15 +64,13 @@ function get_date(offset_date, based_on_today_date, offset_month, based_on_today
 }
 
 //offset日後の成形された日時を取得する関数
-function get_datestr(offset_date, based_on_today_date, offset_month, based_on_today_month){
-  const date = get_date(offset_date, based_on_today_date, offset_month, based_on_today_month);
+function get_datestr(date){
   const datestr = Utilities.formatDate(date, "JST", "MM/dd");
   return datestr;
 }
 
 //funcnameをoffset日後実行するようTriggerを設定する関数
-function set_trigger(funcname, offset_date, based_on_today_date, offset_month, based_on_today_month){
-  const date = get_date(offset_date, based_on_today_date, offset_month, based_on_today_month);
+function set_trigger(funcname, date){
   ScriptApp.newTrigger(funcname).timeBased().at(date).create();
 }
 
@@ -78,11 +83,11 @@ function request_answer(){
   const simekiri_offset = 6;
   
   //集計開始日と締め切り日を取得
-  const today = get_datestr(0, 1, 0, 1);
-  const simekiri = get_datestr(simekiri_offset, 1, 0, 1);
+  const today = get_datestr(get_date(0, 1, 0, 1, 0, 1));
+  const simekiri = get_datestr(get_date(0, 1, simekiri_offset, 1, 0, 1));
 
   //結果集計のトリガーを設定
-  set_trigger('announce_result', simekiri_offset+1, 1, 0, 1);
+  set_trigger('announce_result', get_date(0, 1, simekiri_offset+1, 1, 0, 1));
   
   //メール本文
   const subject = PropertiesService.getScriptProperties().getProperty("REQUESTANSWERSUBJECT");
@@ -103,8 +108,8 @@ function announce_result(){
   let text = PropertiesService.getScriptProperties().getProperty("ANNOUNCERESULTTEXT");
   const date = getResultSchedule();
 
-  let kouhobi = get_date(date+1, 0, 1, 1);
-  let datestr =get_datestr(kouhobi.getDate(), 0, kouhobi.getMonth(), 0);
+  let kouhobi = get_date(0, 1, date+1, 0, 1, 1);
+  let datestr = get_datestr(get_date(kouhobi.getFullYear(), 0, kouhobi.getDate(), 0, kouhobi.getMonth(), 0));
 
   let arrDay = new Array('日', '月', '火', '水', '木', '金', '土');
   let youbi = arrDay[kouhobi.getDay()];
@@ -119,10 +124,10 @@ function announce_result(){
   post_discord(text);
 
   PropertiesService.getScriptProperties().setProperty("REMINDERANNOUNCETXT",`${datestr}(${youbi})です。\n`)
-  set_trigger("announce_reminder_bf0", kouhobi.getDate(), 0, kouhobi.getMonth(), 0);
+  set_trigger("announce_reminder_bf0", get_date(kouhobi.getFullYear(), 0, kouhobi.getDate(), 0, kouhobi.getMonth(), 0));
 
-  if(get_date(kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0).getTime() > get_date(0, 1, 0, 1).getTime()){
-    set_trigger("announce_reminder_bf3", kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0);
+  if(get_date(kouhobi.getFullYear(),1,kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0).getTime() > get_date(0, 1, 0, 1, 0, 1).getTime()){
+    set_trigger("announce_reminder_bf3", get_date(kouhobi.getFullYear(), 0, kouhobi.getDate()-3, 0, kouhobi.getMonth(), 0));
   }
 }
 
